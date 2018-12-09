@@ -3,14 +3,14 @@ Bundler.require
 Dotenv.load '.env'
 
 module SlackNotifier
-  SLACK_CHANNEL = '#slack-test'.freeze
-  SLACK_ICON_EMOJI = ':money_mouth_face:'.freeze
-  SLACK_USERNAME = '家賃回収おじさん'.freeze
+  DEFAULT_SLACK_CHANNEL = '#slack-test'.freeze
+  DEFAULT_SLACK_ICON_EMOJI = ':star-struck:'.freeze
+  DEFAULT_SLACK_USERNAME = 'テストおじさん'.freeze
 
   def self.send_message(text = 'test',
-          channel = SlackNotifier::SLACK_CHANNEL,
-          icon_emoji = SlackNotifier::SLACK_ICON_EMOJI,
-          username = SlackNotifier::SLACK_USERNAME)
+      channel = SlackNotifier::DEFAULT_SLACK_CHANNEL,
+      icon_emoji = SlackNotifier::DEFAULT_SLACK_ICON_EMOJI,
+      username = SlackNotifier::DEFAULT_SLACK_USERNAME)
 
     Slack.configure do |conf|
       conf.token = ENV['SLACK_API_TOKEN']
