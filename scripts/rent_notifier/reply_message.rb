@@ -1,11 +1,13 @@
 require 'bundler/setup'
-require 'slack-ruby-client'
-
-TOKEN = ENV['SLACK_API_TOKEN']
+Bundler.require
+Dotenv.load '.env'
+require_relative './create_message'
 
 Slack.configure do |conf|
-  conf.token = TOKEN
+  conf.token = ENV['SLACK_API_TOKEN']
 end
+
+SLACK_USERNAME = 'rent-payment-bot'.freeze
 
 client = Slack::RealTime::Client.new
 client.on :hello do
@@ -14,10 +16,10 @@ end
 
 client.on :message do |data|
   case data.text
-  when '家賃支払い確認' then
-    client.message channel: data.channel, text: "Hi <@#{data.user}>!"
-  when '家賃確認' then
-    client.message channel: data.channel, text: "<@#{data.user}>"
+  when "おじさん家賃支払い確認して" then
+    client.message channel: data.channel, text: "<@#{data.user}>\n#{CreateMessage.run}"
+  when /^おじさん家賃確認/ then
+    client.message channel: data.channel, text: "<@#{data.user}>\n#{CreateMessage.run}"
   when /^bot/ then
     client.message channel: data.channel, text: "ごめんなさい <@#{data.user}>、よく分かりません"
   end
