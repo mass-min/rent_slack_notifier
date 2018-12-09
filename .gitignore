@@ -1,4 +1,5 @@
 .bundle
+.env
 
 /* google spread sheet */
 config.json
